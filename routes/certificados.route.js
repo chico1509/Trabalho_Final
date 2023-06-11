@@ -11,7 +11,7 @@ const certificadosRoutes = Router();
 
 certificadosRoutes.get("/getAll", getAll);
 certificadosRoutes.post("/add", authRequired, add);
-certificadosRoutes.put("/update", update); //reqs form query params
+certificadosRoutes.put("/update", authRequired, update); //reqs form query params
 certificadosRoutes.delete(
   "/delete/:idToDelete",
   authRequired,
