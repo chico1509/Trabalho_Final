@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div id="loginForm">
+        <div class="column">
+          <div class="form-group">
+            <label for="username">Nome de Utilizador:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Nome de Utilizador"
+              required
+            />
+          </div>
+        </div>
+        <div class="column" style="width: 45%">
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Insira a sua Password"
+              required
+            />
+          </div>
+        </div>
+        <div class="column" style="width: 5%">
+          <div class="form-group">
+            <button id="button" type="button" onclick="login()">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div id="loginResult"></div>
+    </div>
+
+    <script>
+      function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // Replace with your login endpoint URL
+        const url = "http://localhost:4242/api/user/login";
+
+        const requestBody = { username, password };
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            localStorage.setItem("token", data.token);
+            if (data.message === "null") {
+              document.getElementById("loginResult").innerHTML =
+                "Utilizador ou Password Errados";
+            } else {
+              window.location.href = "index.html";
+            }
+
+            // Handle login response
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
+</html>
