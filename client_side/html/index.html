@@ -62,9 +62,9 @@
     <div id="popupForm" class="popup">
       <form>
         <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="name" /><br /><br />
+        <input type="text" id="updateNome" name="nome" /><br /><br />
         <label for="descricao">Descricao:</label>
-        <input type="text" id="descricao" name="descricao" /><br /><br />
+        <input type="text" id="updateDescricao" name="descricao" /><br /><br />
         <input type="submit" value="Submit" onclick="update(id)" />
       </form>
     </div>
@@ -132,9 +132,10 @@
           console.log(data.id);
           openPopup(data.id);
         };
+
         novoBotao2.onclick = () => {
           deleteCertificado(data.id);
-          document.getElementById("myTable").deleteRow(index + 1);
+          location.reload();
         };
 
         novaColuna3.appendChild(novoBotao1);
@@ -216,14 +217,13 @@
 
       function update() {
         var id = sessionStorage.getItem("idGuardado");
-        const nome = document.getElementById("nome").value;
-        const descricao = document.getElementById("descricao").value;
+        const nome = document.getElementById("updateNome").value;
+        const descricao = document.getElementById("updateDescricao").value;
         const url =
           "http://localhost:4242/api/certificados/update?idRequest=" + id;
-
         const requestBody = { nome, descricao };
         const token = localStorage.getItem("token");
-
+        alert(nome);
         fetch(url, {
           method: "PUT",
           headers: {
